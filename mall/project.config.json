@@ -1,0 +1,13 @@
+{
+  "description": "a wechat mini program mall",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram",
+  "appid": "",
+  "projectname": "mall",
+  "miniprogramRoot": "./dist"
+}
