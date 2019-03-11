@@ -1,6 +1,7 @@
 package com.erzhiqianyi.mall.service.product;
 
 import com.erzhiqianyi.mall.domain.product.AdvertsProduct;
+import com.erzhiqianyi.mall.domain.product.ProductStatus;
 import com.erzhiqianyi.mall.payload.product.AdvertsProductPayload;
 import com.erzhiqianyi.mall.repository.product.AdvertsProductRepository;
 import com.erzhiqianyi.mall.vo.product.AdvertsProductResponse;
@@ -28,10 +29,10 @@ public class AdvertsProductServiceImpl implements AdvertsProductService {
     private AdvertsProductRepository advertsProductRepository;
 
     @Override
-    public Flux<AdvertsProductResponse> listAdvertsProduct() {
+    public Flux<AdvertsProductResponse> listAdvertsProduct(ProductStatus status) {
         Flux<AdvertsProductResponse> defer = Flux.defer(
                 () -> Flux.fromIterable(advertsProductRepository
-                        .findAll()
+                        .findByStatus(status)
                         .stream()
                         .map(AdvertsProductResponse::new)
                         .collect(Collectors.toList())));
@@ -42,8 +43,20 @@ public class AdvertsProductServiceImpl implements AdvertsProductService {
     public Mono<Long> add(AdvertsProductPayload request) {
         return Mono.fromCallable(() -> transactionTemplate.execute(status -> {
             AdvertsProduct product = new AdvertsProduct();
+            product.setTitle(request.getTitle());
+            product.setPicUrl(request.getPicUrl());
+            product.setAdvertUrl(request.getAdvertUrl());
+            product.setSort(request.getSort());
+            product.setStatus(ProductStatus.CREATE);
             AdvertsProduct savedProduct = advertsProductRepository.save(product);
             return savedProduct.getId();
+        })).subscribeOn(jdbcScheduler);
+    }
+
+    @Override
+    public Mono<Long> update(Long id,AdvertsProductPayload request) {
+         return Mono.fromCallable(() -> transactionTemplate.execute(status -> {
+            return 1l;
         })).subscribeOn(jdbcScheduler);
     }
 

@@ -8,15 +8,28 @@ import java.time.Instant;
 
 @Data
 public class AdvertsProductResponse {
-    private String advertUrl;
 
-    private String id;
+    private Long id;
+
+    private String advertUrl;
 
     private String picUrl;
 
     private String title;
 
+    private Integer sort;
+
+    public AdvertsProductResponse() {
+    }
+
     public AdvertsProductResponse(AdvertsProduct product) {
+        this.id = product.getId();
+        this.title = product.getTitle();
+        this.picUrl = product.getPicUrl();
+        this.advertUrl = product.getAdvertUrl();
+        this.sort = product.getSort();
+        this.createAt = product.getCreateAt();
+        this.updateAt = product.getUpdateAt();
 
     }
 
