@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import top.erzhiqian.wechat.core.spring.advice.response.IgnoreResponseAdvice;
 import top.erzhiqian.wechat.scurity.app.ServerVerifyApp;
 import top.erzhiqian.wechat.scurity.client.cmd.WechatServerVerifyMessageCmd;
 
@@ -25,6 +26,7 @@ public class ServerVerifyController {
     }
 
     @GetMapping("server/verify/{appId}")
+    @IgnoreResponseAdvice
     public String verifyServer(String signature, String timestamp, String nonce, String echostr,
                                @PathVariable("appId") String appId) {
         WechatServerVerifyMessageCmd cmd = new WechatServerVerifyMessageCmd(signature, timestamp, nonce, echostr);

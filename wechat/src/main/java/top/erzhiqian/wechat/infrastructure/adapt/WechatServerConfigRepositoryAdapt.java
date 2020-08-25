@@ -2,18 +2,20 @@ package top.erzhiqian.wechat.infrastructure.adapt;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import top.erzhiqian.wechat.scurity.domain.entity.ServerVerifyConfig;
-import top.erzhiqian.wechat.scurity.domain.repository.WechatServerConfigRepository;
+import top.erzhiqian.wechat.authentication.domain.entity.AppConfig;
+import top.erzhiqian.wechat.authentication.domain.repository.AppConfigRepository;
 import top.erzhiqian.wechat.infrastructure.convert.AppServerConfigConvert;
 import top.erzhiqian.wechat.infrastructure.po.WechatAppConfigPO;
 import top.erzhiqian.wechat.infrastructure.repository.jdbc.AppServerConfigRepository;
+import top.erzhiqian.wechat.scurity.domain.entity.ServerVerifyConfig;
+import top.erzhiqian.wechat.scurity.domain.repository.WechatServerConfigRepository;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
 
 @Service
-public class WechatServerConfigRepositoryAdapt implements WechatServerConfigRepository {
+public class WechatServerConfigRepositoryAdapt implements WechatServerConfigRepository, AppConfigRepository {
 
     private AppServerConfigRepository repository;
 
@@ -28,11 +30,8 @@ public class WechatServerConfigRepositoryAdapt implements WechatServerConfigRepo
 
     @Override
     public Optional<ServerVerifyConfig> findServerVerifyConfig(String appId) {
-        if (StringUtils.isEmpty(appId)) {
-            return Optional.empty();
-        }
-        Optional<WechatAppConfigPO> configOptional = repository.findByAppId(appId);
-        return configOptional.map(configConvert::convertToEntity);
+        return findByAppId(appId)
+                .map(configConvert::convertToServerVerifyEntity);
     }
 
     @Override
@@ -42,5 +41,18 @@ public class WechatServerConfigRepositoryAdapt implements WechatServerConfigRepo
             return;
         }
         repository.updateVerifyStatus(id, status);
+    }
+
+    @Override
+    public Optional<AppConfig> findAppConfig(String appId) {
+        return findByAppId(appId)
+                .map(configConvert::convertToAppConfigEntity);
+    }
+
+    private Optional<WechatAppConfigPO> findByAppId(String appId) {
+        if (StringUtils.isEmpty(appId)) {
+            return Optional.empty();
+        }
+        return repository.findByAppId(appId);
     }
 }

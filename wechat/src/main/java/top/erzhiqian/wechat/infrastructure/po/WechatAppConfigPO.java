@@ -16,7 +16,7 @@ public class WechatAppConfigPO extends BasePO {
     @Column(columnDefinition = "varchar(50) not null comment '公众号或小程序AppID' ", unique = true)
     private String appId;
 
-    @Column(columnDefinition = "varchar(50) not null comment 'AppSecret(小程序密钥)' ", unique = true)
+    @Column(columnDefinition = "varchar(50) not null comment 'AppSecret(小程序密钥)' ")
     private String appSecret;
 
     @Column(columnDefinition = "varchar(500) not null comment 'URL(服务器地址)' ")
