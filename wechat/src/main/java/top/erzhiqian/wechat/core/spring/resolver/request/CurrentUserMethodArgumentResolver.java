@@ -7,6 +7,9 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
+import top.erzhiqian.wechat.core.spring.config.ApplicationContextHolder;
+
+import java.util.Optional;
 
 public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
     private static final String HEADER_TOKEN = "token";
@@ -25,11 +28,15 @@ public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentR
         }
         CurrentApp currentApp = CurrentApp.fromHeader(refererHeader);
 
-        String tokenHeader = nativeWebRequest.getHeader(HEADER_TOKEN);
-        if (StringUtils.isEmpty(refererHeader)) {
+        String token = nativeWebRequest.getHeader(HEADER_TOKEN);
+        if (StringUtils.isEmpty(token)) {
             throw new MissingServletRequestPartException(CurrentMiniProgramMethodArgumentResolver.HEADER_REFERER);
         }
-        CurrentLoginUser currentUser = new CurrentLoginUser(tokenHeader);
-        return currentUser;
+        LoadCurrentUserService userService = ApplicationContextHolder.getBean(LoadCurrentUserService.class);
+        Optional<CurrentLoginUser> optional = userService.loadUser(token);
+        optional.orElseThrow(() -> new IllegalAccessException("登录失败，请重新登录。"));
+        CurrentLoginUser currentLoginUser = optional.get();
+        currentLoginUser.setCurrentApp(currentApp);
+        return currentLoginUser;
     }
 }

@@ -5,7 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
 
 @Log4j2
-public class CodeSessionResultTest {
+public class AreaSessionResultTest {
 
     @Test
     public void jsonToSessionResult() {

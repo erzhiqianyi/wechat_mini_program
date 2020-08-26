@@ -7,4 +7,6 @@ public class AuthenticationUserDTO {
 
     private String token;
 
+    private Boolean needPhone;
+
 }

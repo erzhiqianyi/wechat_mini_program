@@ -33,5 +33,10 @@ public class MiniProgramAuthUser extends BaseEntity {
     public String  currentSessionKey(){
         return null != session ?  session.getSessionKey() : null;
     }
+
+    public String openId(){
+        return  null != session ? session.getOpenId() : null;
+    }
+
 }
 

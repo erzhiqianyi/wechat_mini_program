@@ -1,7 +1,5 @@
 package top.erzhiqian.wechat.core.domain.entity;
 
-import top.erzhiqian.wechat.infrastructure.po.WechatAppConfigPO;
-
 import java.time.Instant;
 
 public class BaseEntity {

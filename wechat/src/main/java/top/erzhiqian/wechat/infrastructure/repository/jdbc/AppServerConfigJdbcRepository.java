@@ -10,7 +10,7 @@ import top.erzhiqian.wechat.infrastructure.po.WechatAppConfigPO;
 import java.util.Optional;
 
 @Repository
-public interface AppServerConfigRepository extends CrudRepository<WechatAppConfigPO, Long> {
+public interface AppServerConfigJdbcRepository extends CrudRepository<WechatAppConfigPO, Long> {
     Optional<WechatAppConfigPO> findByAppId(String appId);
 
     @Modifying

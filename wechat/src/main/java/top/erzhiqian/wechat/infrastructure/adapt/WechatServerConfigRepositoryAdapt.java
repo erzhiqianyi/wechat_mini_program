@@ -6,7 +6,7 @@ import top.erzhiqian.wechat.authentication.domain.entity.AppConfig;
 import top.erzhiqian.wechat.authentication.domain.repository.AppConfigRepository;
 import top.erzhiqian.wechat.infrastructure.convert.AppServerConfigConvert;
 import top.erzhiqian.wechat.infrastructure.po.WechatAppConfigPO;
-import top.erzhiqian.wechat.infrastructure.repository.jdbc.AppServerConfigRepository;
+import top.erzhiqian.wechat.infrastructure.repository.jdbc.AppServerConfigJdbcRepository;
 import top.erzhiqian.wechat.scurity.domain.entity.ServerVerifyConfig;
 import top.erzhiqian.wechat.scurity.domain.repository.WechatServerConfigRepository;
 
@@ -17,12 +17,12 @@ import java.util.Optional;
 @Service
 public class WechatServerConfigRepositoryAdapt implements WechatServerConfigRepository, AppConfigRepository {
 
-    private AppServerConfigRepository repository;
+    private AppServerConfigJdbcRepository repository;
 
 
     private AppServerConfigConvert configConvert;
 
-    public WechatServerConfigRepositoryAdapt(AppServerConfigRepository repository,
+    public WechatServerConfigRepositoryAdapt(AppServerConfigJdbcRepository repository,
                                              AppServerConfigConvert configConvert) {
         this.repository = repository;
         this.configConvert = configConvert;
