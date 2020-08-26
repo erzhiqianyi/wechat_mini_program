@@ -2,6 +2,8 @@ package top.erzhiqian.wechat.scurity.domain.valueobject;
 
 
 import org.springframework.util.StringUtils;
+import top.erzhiqian.wechat.core.exception.BaseException;
+import top.erzhiqian.wechat.core.exception.BaseExceptionCode;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,18 +17,18 @@ public class WechatServerVerifyMessage {
     public WechatServerVerifyMessage(String signature, String timestamp, String nonce, String echoStr) {
 
         if (StringUtils.isEmpty(signature)) {
-            throw new IllegalArgumentException("微信加密签名不能为空。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"微信加密签名不能为空。");
         }
 
         if (StringUtils.isEmpty(timestamp)) {
-            throw new IllegalArgumentException("时间戳不为空。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"时间戳不为空。");
         }
 
         if (StringUtils.isEmpty(nonce)) {
-            throw new IllegalArgumentException("随机数不能为空。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"随机数不能为空。");
         }
         if (StringUtils.isEmpty(echoStr)) {
-            throw new IllegalArgumentException("随机字符串不能为空。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"随机字符串不能为空。");
         }
 
         this.signature = signature;

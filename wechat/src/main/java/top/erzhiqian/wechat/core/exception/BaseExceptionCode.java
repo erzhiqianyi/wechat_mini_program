@@ -4,8 +4,8 @@ public enum BaseExceptionCode implements ExceptionCode {
     SUCCESS(0, "success"),
     SYSTEM_ERROR(10000, "service unavailable"),
     DATA_NOT_EXISTS(10001, "no data"),
-    NULL_PARAM(10002,"invalid param"),
-    CONFIG_NOT_EXISTS(10003,"config not exists.");
+    INVALID_PARAM(10002,"invalid param"),
+    CONFIG_NOT_EXISTS(10003,"config not exists."),;
     private int code;
     private String message;
 

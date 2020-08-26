@@ -8,6 +8,8 @@ import top.erzhiqian.wechat.authentication.app.AuthenticationApp;
 import top.erzhiqian.wechat.authentication.client.cmd.WechatMiniAuthCmd;
 import top.erzhiqian.wechat.authentication.client.cmd.WechatNiniEncryptCmd;
 import top.erzhiqian.wechat.authentication.client.dto.AuthenticationUserDTO;
+import top.erzhiqian.wechat.core.exception.BaseException;
+import top.erzhiqian.wechat.core.exception.BaseExceptionCode;
 import top.erzhiqian.wechat.core.spring.resolver.request.CurrentApp;
 import top.erzhiqian.wechat.core.spring.resolver.request.CurrentLoginUser;
 import top.erzhiqian.wechat.core.spring.resolver.request.CurrentMiniProgram;
@@ -30,7 +32,7 @@ public class AuthenticationController {
                                                 @CurrentMiniProgram CurrentApp app) {
 
         if (null == app) {
-            throw new IllegalArgumentException("服务繁忙，请稍后再试。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"服务繁忙，请稍后再试。");
         }
         cmd.setCurrentApp(app);
         Optional<AuthenticationUserDTO> authenticationUser = authenticationApp.authenticationByWechatCode(cmd);
@@ -46,7 +48,7 @@ public class AuthenticationController {
     public AuthenticationUserDTO authentication(@RequestBody WechatNiniEncryptCmd cmd,
                                                 @CurrentUser CurrentLoginUser user) {
         if (null == user) {
-            throw new IllegalArgumentException("服务繁忙，请稍后再试。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"服务繁忙，请稍后再试。");
         }
         cmd.setCurrentLoginUser(user);
         authenticationApp.authenticationByWechatPhoneNumber(cmd);

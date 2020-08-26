@@ -1,7 +1,7 @@
 package top.erzhiqian.wechat.infrastructure.po;
 
 import lombok.Data;
-import top.erzhiqian.wechat.core.infrastructure.po.BasePO;
+import top.erzhiqian.wechat.core.infrastructure.po.AutoIncrementPO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Data
 @Table(name = WechatAppConfigPO.TABLE_NAME)
 @Entity
-public class WechatAppConfigPO extends BasePO {
+public class WechatAppConfigPO extends AutoIncrementPO {
     public static final String TABLE_NAME ="wechat_app_config";
 
     @Column(columnDefinition = "varchar(50) not null comment '公众号或小程序AppID' ", unique = true)

@@ -2,17 +2,14 @@ package top.erzhiqian.wechat.core.infrastructure.po;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import java.time.Instant;
 
 
 @MappedSuperclass
 @Data
 public class BasePO {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
 
     protected Instant createAt;
 

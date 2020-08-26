@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.StringUtils;
+import top.erzhiqian.wechat.core.exception.BaseException;
+import top.erzhiqian.wechat.core.exception.BaseExceptionCode;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -18,21 +20,29 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class WechatBizDataCrypt {
+    /**
+     * key长度，根据微信给的文档，长度固定为24
+     */
     private static final int DEFAULT_KEY_LENGTH = 24;
+
+    /**
+     * 默认加密类型
+     */
     private static final String SECRET_KEY_SPEC = "AES";
+
     private static final String CIPHER_TYPE = "AES/CBC/PKCS5Padding";
     private String appId;
     private String sessionKey;
 
     public WechatBizDataCrypt(String appId, String sessionKey) {
         if (StringUtils.isEmpty(appId)) {
-            throw new IllegalArgumentException("用用不存在。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"应用不存在。");
         }
         if (StringUtils.isEmpty(sessionKey)) {
-            throw new IllegalArgumentException("sessionKey不存在");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"sessionKey不存在");
         }
         if (sessionKey.length() != DEFAULT_KEY_LENGTH) {
-            throw new IllegalArgumentException("sessionKey不正确");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"sessionKey不正确");
         }
         this.appId = appId;
         this.sessionKey = sessionKey;

@@ -2,6 +2,8 @@ package top.erzhiqian.wechat.authentication.domain.valueobject;
 
 import lombok.ToString;
 import org.springframework.util.StringUtils;
+import top.erzhiqian.wechat.core.exception.BaseException;
+import top.erzhiqian.wechat.core.exception.BaseExceptionCode;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -13,16 +15,16 @@ public class PhoneNumber {
 
     public PhoneNumber(String number, String code) {
         if (StringUtils.isEmpty(number)) {
-            throw new IllegalArgumentException("手机号不能为空。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"手机号不能为空。");
         }
         this.number = number;
         this.area = Area.fromCode(code);
         if (null == code) {
-            throw new IllegalArgumentException("手机格式不正确不能为空。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"手机格式不正确不能为空。");
         }
         boolean validPhone = this.area.checkFormat(this.number);
         if (!validPhone) {
-            throw new IllegalArgumentException("手机号格式错误。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"手机号格式错误。");
         }
     }
 

@@ -2,6 +2,8 @@ package top.erzhiqian.wechat.core.spring.resolver.request;
 
 import lombok.Data;
 import org.springframework.util.StringUtils;
+import top.erzhiqian.wechat.core.exception.BaseException;
+import top.erzhiqian.wechat.core.exception.BaseExceptionCode;
 
 @Data
 public class CurrentApp {
@@ -17,16 +19,16 @@ public class CurrentApp {
 
     private CurrentApp(String header) {
         if (StringUtils.isEmpty(header)) {
-            throw new IllegalArgumentException("header不能为空。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"header不能为空。");
         }
         int siteIndex = header.indexOf(SITE_END);
         if (siteIndex < 0) {
-            throw new IllegalArgumentException("header url格式不正确。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"header url格式不正确。");
         }
         header = header.substring(siteIndex + SITE_END.length(), header.length());
         String[] array = header.split(PATH_PRARAM_SPLITE);
         if (array.length != 4){
-            throw new IllegalArgumentException("header url参数错误不正确。");
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM,"header url参数错误不正确。");
         }
         this.appId = array[1];
         this.version = array[2];

@@ -22,7 +22,7 @@ public class AuthUserConvert {
         authTokenPO.setId(token);
         authTokenPO.setOpenId(authUser.getAppId());
         authTokenPO.setAppId(authUser.getAppId());
-        authTokenPO.setCreateTime(Instant.now());
+        authTokenPO.setCreateAt(Instant.now());
         return authTokenPO;
     }
 

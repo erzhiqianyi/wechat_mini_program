@@ -10,6 +10,8 @@ import top.erzhiqian.wechat.authentication.domain.entity.MiniProgramAuthUser;
 import top.erzhiqian.wechat.authentication.domain.facotory.AuthFactory;
 import top.erzhiqian.wechat.authentication.domain.repository.AuthTokenRepository;
 import top.erzhiqian.wechat.authentication.domain.valueobject.PhoneNumber;
+import top.erzhiqian.wechat.core.exception.BaseException;
+import top.erzhiqian.wechat.core.exception.BaseExceptionCode;
 
 import java.util.Optional;
 
@@ -37,7 +39,7 @@ public class AuthenticationApp {
         //将用户信息存入 redis
         boolean saveAuthUser = authTokenRepository.saveUserToken(authUser, wechatUser.currentSessionKey());
         if (!saveAuthUser) {
-            throw new IllegalArgumentException("服务不可用，请稍后再试。");
+            throw new BaseException(BaseExceptionCode.SYSTEM_ERROR,"服务不可用，请稍后再试。");
         }
         // todo 判断是否需要获取手机号 根据unionId或者openId去判断
         AuthenticationUserDTO authenticationUser = new AuthenticationUserDTO();

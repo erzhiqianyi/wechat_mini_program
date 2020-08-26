@@ -4,6 +4,7 @@ import org.springframework.util.StringUtils;
 import top.erzhiqian.wechat.authentication.domain.repository.MiniProgramAuthRepository;
 import top.erzhiqian.wechat.authentication.domain.valueobject.MiniProgramAuthSession;
 import top.erzhiqian.wechat.core.domain.entity.BaseEntity;
+import top.erzhiqian.wechat.core.exception.BaseException;
 import top.erzhiqian.wechat.core.exception.BaseExceptionCode;
 
 import java.util.Optional;
@@ -18,7 +19,7 @@ public class MiniProgramAuthUser extends BaseEntity {
 
     public MiniProgramAuthUser(String authCode, MiniProgramAuthRepository repository) {
         if (StringUtils.isEmpty(authCode)) {
-            throw new IllegalArgumentException(BaseExceptionCode.NULL_PARAM.message());
+            throw new BaseException(BaseExceptionCode.INVALID_PARAM.message());
         }
         this.authCode = authCode;
         this.repository = repository;
