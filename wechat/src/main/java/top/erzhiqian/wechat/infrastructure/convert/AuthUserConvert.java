@@ -23,6 +23,7 @@ public class AuthUserConvert {
         authTokenPO.setOpenId(authUser.getAppId());
         authTokenPO.setAppId(authUser.getAppId());
         authTokenPO.setCreateAt(Instant.now());
+        authTokenPO.setLastModified(Instant.now());
         return authTokenPO;
     }
 
@@ -30,7 +31,7 @@ public class AuthUserConvert {
         if (null == authTokenPO) {
             return null;
         }
-        AuthUser authUser = new AuthUser(authTokenPO.getOpenId(),authTokenPO.getAppId());
+        AuthUser authUser = new AuthUser(authTokenPO.getOpenId(), authTokenPO.getAppId());
         return authUser;
     }
 }

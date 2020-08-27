@@ -11,8 +11,11 @@ public class CurrentLoginUser {
     private String unionId;
     private String uuid;
     private String phone;
+
     private String wechatSessionKey;
+
     private String externalToken;
+
     private CurrentApp currentApp;
 
     public CurrentLoginUser(AuthUser authUser, String token) {

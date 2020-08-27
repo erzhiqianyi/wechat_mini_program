@@ -7,6 +7,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
+import top.erzhiqian.wechat.core.exception.BaseException;
+import top.erzhiqian.wechat.core.exception.BaseExceptionCode;
 import top.erzhiqian.wechat.core.spring.config.ApplicationContextHolder;
 
 import java.util.Optional;
@@ -34,7 +36,7 @@ public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentR
         }
         LoadCurrentUserService userService = ApplicationContextHolder.getBean(LoadCurrentUserService.class);
         Optional<CurrentLoginUser> optional = userService.loadUser(token);
-        optional.orElseThrow(() -> new IllegalAccessException("登录失败，请重新登录。"));
+        optional.orElseThrow(() -> new BaseException(BaseExceptionCode.TOKEN_EXPIRED, "登录失败，请重新登录。"));
         CurrentLoginUser currentLoginUser = optional.get();
         currentLoginUser.setCurrentApp(currentApp);
         return currentLoginUser;

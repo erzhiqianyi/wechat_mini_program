@@ -9,9 +9,8 @@ import java.time.Instant;
 
 @Data
 @MappedSuperclass
-public class ExpirePO extends BasePO {
-    @Id
-    protected String id;
+public class ExpirePO extends UniqueIdPO {
+
 
     @TimeToLive
     protected Instant expiredAt;

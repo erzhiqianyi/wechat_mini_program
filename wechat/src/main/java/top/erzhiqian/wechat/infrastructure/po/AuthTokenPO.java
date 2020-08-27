@@ -2,14 +2,17 @@ package top.erzhiqian.wechat.infrastructure.po;
 
 import lombok.Data;
 import org.springframework.data.redis.core.RedisHash;
-import top.erzhiqian.wechat.core.infrastructure.po.ExpirePO;
+import top.erzhiqian.wechat.core.infrastructure.po.UniqueIdPO;
 
-import javax.persistence.Id;
-import java.time.Instant;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Data
-@RedisHash("auth_token")
-public class AuthTokenPO  extends ExpirePO {
+@RedisHash("wechat_auth_token")
+@Table(name = AuthTokenPO.TABLE_NAME)
+@Entity
+public class AuthTokenPO extends UniqueIdPO {
+    public static final String TABLE_NAME = "auth_token";
 
     private String openId;
 

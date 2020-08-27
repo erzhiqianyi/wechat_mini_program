@@ -25,6 +25,14 @@ public class LoadCurrentUserServiceImpl implements LoadCurrentUserService {
             return Optional.empty();
         }
         Optional<AuthUser> optional = authTokenRepository.loadUserByToken(token);
-        return optional.map(item -> new CurrentLoginUser(item,token));
-   }
+        if (!optional.isPresent()) {
+            return Optional.empty();
+        }
+        AuthUser user = optional.get();
+        boolean expired = user.expired();
+        if (expired) {
+            authTokenRepository.expiredAuthToken(token);
+        }
+        return Optional.of(new CurrentLoginUser(user, token));
+    }
 }

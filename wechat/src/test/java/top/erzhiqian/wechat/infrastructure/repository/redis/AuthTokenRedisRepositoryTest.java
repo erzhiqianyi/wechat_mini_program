@@ -27,7 +27,7 @@ public class AuthTokenRedisRepositoryTest {
         AuthTokenPO po = new AuthTokenPO();
         po.setId("fsd");
         po.setAppId("fsdfsdklk");
-        po.setCreateTime(Instant.now());
+        po.setCreateAt(Instant.now());
         po.setOpenId("fdjgdslg");
         po.setUnionId("e43453");
         po.setUuid("ufdsfds");
